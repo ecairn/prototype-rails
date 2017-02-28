@@ -184,10 +184,13 @@ class RespondToControllerTest < ActionController::TestCase
 end
 
 class RespondWithController < ActionController::Base
-  respond_to :html, :json, :js
 
   def using_resource
-    respond_with(resource)
+    respond_to do |format|
+      format.html { render html: resource }
+      format.json { render json: resource }
+      format.js { render js: resource }
+    end
   end
 protected
 

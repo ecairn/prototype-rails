@@ -2,7 +2,6 @@ require 'abstract_unit'
 
 class RenderJSTest < ActionController::TestCase
   class TestController < ActionController::Base
-    protect_from_forgery
 
     def self.controller_path
       'test'

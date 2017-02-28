@@ -30,7 +30,7 @@ class FunctionalFragmentCachingTest < ActionController::TestCase
     @controller = FunctionalCachingController.new
     @controller.perform_caching = true
     @controller.cache_store = @store
-    @request = ActionController::TestRequest.new
+    @request = ActionController::TestRequest.create
     @response = ActionController::TestResponse.new
   end
 
