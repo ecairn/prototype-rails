@@ -532,7 +532,7 @@ module ActionView
           end
 
           def javascript_object_for(object)
-            ActiveSupport::JSON.encode(object)
+            ::ActiveSupport::JSON.encode(object)
           end
 
           def arguments_for_call(arguments, block = nil)
