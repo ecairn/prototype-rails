@@ -532,15 +532,7 @@ module ActionView
           end
 
           def javascript_object_for(object)
-            if object.is_a?(ActionView::JsonLiteral)
-              result = object.as_json
-            elsif ActionView::Helpers::JavaScriptVariableProxy
-              result = object.as_json
-            else
-              result = ::ActiveSupport::JSON.encode(object)
-            end
-            puts "from #{object.class} to #{result.inspect}"
-            result
+            ActiveSupport::JSON.encode(object)
           end
 
           def arguments_for_call(arguments, block = nil)
