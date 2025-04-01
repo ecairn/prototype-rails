@@ -632,23 +632,22 @@ module ActionView
           js_options['insertion']    = "'#{options[:position].to_s.downcase}'" if options[:position]
           js_options['evalScripts']  = options[:script].nil? || options[:script]
 
+            # For Ruby 3.4.x
           if options[:form]
-            js_options['parameters'] = 'Form.serialize(this)'
+            js_options['parameters'] = String.new('Form.serialize(this)')
           elsif options[:submit]
-            js_options['parameters'] = "Form.serialize('#{options[:submit]}')"
+            js_options['parameters'] = String.new("Form.serialize('#{options[:submit]}')")
           elsif options[:with]
-            js_options['parameters'] = options[:with]
+            js_options['parameters'] = String.new(options[:with])
           end
 
           if protect_against_forgery? && !options[:form]
             if js_options['parameters'].present?
               js_options['parameters'] << " + '&"
             else
-              js_options['parameters'] = "'"
+              js_options['parameters'] = String.new("'")
             end
 
-            # For Ruby 3.4.x
-            js_options['parameters'] = String.new(js_options['parameters'])
             js_options['parameters'] << "#{request_forgery_protection_token}=' + encodeURIComponent('#{escape_javascript form_authenticity_token}')"
           end
 
