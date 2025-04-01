@@ -132,9 +132,10 @@ module ActionView
           update << "'#{options[:update]}'"
         end
 
+        # For Ruby 3.4.x
         function = update.empty? ?
-          "new Ajax.Request(" :
-          "new Ajax.Updater(#{update}, "
+          String.new("new Ajax.Request(") :
+          String.new("new Ajax.Updater(#{update}, ")
 
         url_options = options[:url]
         function << "'#{ERB::Util.html_escape(escape_javascript(url_for(url_options)))}'"
@@ -640,11 +641,14 @@ module ActionView
           end
 
           if protect_against_forgery? && !options[:form]
-            if js_options['parameters']
+            if js_options['parameters'].present?
               js_options['parameters'] << " + '&"
             else
               js_options['parameters'] = "'"
             end
+
+            # For Ruby 3.4.x
+            js_options['parameters'] = String.new(js_options['parameters'])
             js_options['parameters'] << "#{request_forgery_protection_token}=' + encodeURIComponent('#{escape_javascript form_authenticity_token}')"
           end
 
